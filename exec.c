@@ -10,7 +10,10 @@ char *get_input_line(void)
 	size_t bufsize = 0;
 
 	if (getline(&line, &bufsize, stdin) == -1)
+	{
+		free(line);
 		exit(EXIT_FAILURE);
+	}
 	return (line);
 }
 /**
@@ -82,6 +85,7 @@ void exec_cmd(char **args)
 		{
 			if (execve(args[0], args, environ) == -1)
 				perror(args[0]);
+			free_args(args);
 		}
 		else
 		{
