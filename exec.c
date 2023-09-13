@@ -58,3 +58,36 @@ char **build_args(char *cmd_line)
 	}
 	return (args);
 }
+/**
+ * exec_cmd - a function that execute a simple command
+ * @args : command struct
+ * Return: status
+ */
+void exec_cmd(char **args)
+{
+	struct stat st;
+	int status;
+	pid_t cpid;
+
+	if (*(args[0]) == '\0')
+		return;
+	if (stat(args[0], &st) == -1)
+		perror(args[0]);
+	else
+	{
+		cpid = fork();
+		if (cpid == -1)
+			perror(args[0]);
+		if (cpid == 0)
+		{
+			if (execve(args[0], args, environ) == -1)
+				perror(args[0]);
+		}
+		else
+		{
+			do {
+				waitpid(cpid, &status, WUNTRACED);
+			} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+		}
+	}
+}
