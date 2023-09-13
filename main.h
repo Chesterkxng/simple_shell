@@ -29,4 +29,8 @@ void insertArgument(char **dest, char *arg);
 char **build_args(char *cmd_line);
 void exec_cmd(char **args);
 
+/*********** free.c *****************/
+
+void free_args(char **args);
+
 #endif /*MAIN_H*/
