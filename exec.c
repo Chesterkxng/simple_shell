@@ -85,6 +85,7 @@ void exec_cmd(char **args)
 		{
 			if (execve(args[0], args, environ) == -1)
 				perror(args[0]);
+			free_args(args);
 		}
 		else
 		{
