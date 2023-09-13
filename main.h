@@ -13,6 +13,8 @@
 #define TOKENS_SIZE 64
 #define DELIMITER " \n"
 
+extern char **environ;
+
 /*********** utilities.c *************/
 
 int _strlen(char *s);
