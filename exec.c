@@ -27,3 +27,34 @@ void insertArgument(char **dest, char *arg)
 		i++;
 	*(dest + i) = arg;
 }
+/**
+ * **build_args - a function that return args
+ * @cmd_line: command line caught by the getline cmd
+ * Return: an array of buit args
+ */
+char **build_args(char *cmd_line)
+{
+	int i = 0;
+	int token_size = TOKENS_SIZE;
+	char *p;
+	char **args = malloc(sizeof(args) * TOKENS_SIZE);
+
+	if (args == NULL)
+		return (NULL);
+	p = strtok(cmd_line, DELIMITER);
+
+	while (p != NULL)
+	{
+		insertArgument(args, p);
+		p = strtok(NULL, DELIMITER);
+		i++;
+		if (i > token_size)
+		{
+			args = _realloc(args, token_size,  token_size * 2);
+			if (args == NULL)
+				return (NULL);
+			token_size *= 2;
+		}
+	}
+	return (args);
+}

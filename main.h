@@ -9,6 +9,10 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 
+/*********** Global variables *********/
+#define TOKENS_SIZE 64
+#define DELIMITER " \n"
+
 /*********** utilities.c *************/
 
 int _strlen(char *s);
@@ -20,5 +24,6 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 
 char *get_input_line(void);
 void insertArgument(char **dest, char *arg);
+char **build_args(char *cmd_line);
 
 #endif /*MAIN_H*/
