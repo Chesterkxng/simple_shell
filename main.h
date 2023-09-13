@@ -9,9 +9,15 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 
+/*********** utilities.c *************/
+
 int _strlen(char *s);
 void prompt(void);
 int space_needed(char *cmd_line);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+
+/*********** exec.c ******************/
+
+char *get_input_line(void);
 
 #endif /*MAIN_H*/
