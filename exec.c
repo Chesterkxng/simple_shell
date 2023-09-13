@@ -13,3 +13,17 @@ char *get_input_line(void)
 		exit(EXIT_FAILURE);
 	return (line);
 }
+/**
+ * insertArgument - a function that fill the informations in the struct
+ * @dest: array
+ * @arg: array of args
+ * Return: void
+ */
+void insertArgument(char **dest, char *arg)
+{
+	int i = 0;
+
+	while (*(dest + i) != NULL)
+		i++;
+	*(dest + i) = arg;
+}

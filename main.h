@@ -19,5 +19,6 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 /*********** exec.c ******************/
 
 char *get_input_line(void);
+void insertArgument(char **dest, char *arg);
 
 #endif /*MAIN_H*/
