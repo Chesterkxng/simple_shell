@@ -72,7 +72,7 @@ void exec_cmd(char **args)
 	int status;
 	pid_t cpid;
 
-	if (*(args[0]) == '\0')
+	if (!args[0])
 		return;
 	if (stat(args[0], &st) == -1)
 		perror(args[0]);

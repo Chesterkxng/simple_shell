@@ -7,15 +7,12 @@
 int main(void)
 {
 	char *line;
-	int n = 0;
-	char *args[] = {NULL, NULL};
+	char **args;
 
 	do {
 		prompt();
 		line = get_input_line();
-		n = _strlen(line);
-		line[n - 1] = '\0';
-		args[0] = line;
+		args = build_args(line);
 		exec_cmd(args);
 		free(line);
 	} while (1);
