@@ -33,7 +33,7 @@ void insertArgument(char **dest, char *arg)
 /**
  * **build_args - a function that return args
  * @cmd_line: command line caught by the getline cmd
- * Return: an array of buit args
+ * Return: an array of built args
  */
 char **build_args(char *cmd_line)
 {
@@ -63,10 +63,11 @@ char **build_args(char *cmd_line)
 }
 /**
  * exec_cmd - a function that execute a simple command
- * @args : command struct
+ * @args : command arguments
+ * @argv: list of shell arguments
  * Return: status
  */
-void exec_cmd(char **args)
+void exec_cmd(char **args, char **argv)
 {
 	struct stat st;
 	int status;
@@ -75,7 +76,7 @@ void exec_cmd(char **args)
 	if (!args[0])
 		return;
 	if (stat(args[0], &st) == -1)
-		perror(args[0]);
+		perror(argv[0]); /* display shell name with error */
 	else
 	{
 		cpid = fork();

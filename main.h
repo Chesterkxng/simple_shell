@@ -27,7 +27,7 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 char *get_input_line(void);
 void insertArgument(char **dest, char *arg);
 char **build_args(char *cmd_line);
-void exec_cmd(char **args);
+void exec_cmd(char **args, char **argv);
 
 /*********** free.c *****************/
 
