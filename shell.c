@@ -21,6 +21,7 @@ int main(int argc, char **argv)
 		args = build_args(line);
 		exec_cmd(args, argv);
 		free(line);
+		free(args);
 
 	} while (1);
 
