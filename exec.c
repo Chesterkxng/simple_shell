@@ -79,6 +79,7 @@ void exec_cmd(char **args, char **argv)
 
 	if (!args[0])
 		return;
+	get_built_in(args);
 	if (stat(args[0], &st) == -1)
 		perror(argv[0]); /* display shell name with error */
 	else
