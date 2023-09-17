@@ -40,10 +40,14 @@ char **build_args(char *cmd_line)
 	int i = 0;
 	int token_size = TOKENS_SIZE;
 	char *p;
-	char **args = malloc(sizeof(args) * TOKENS_SIZE);
+	char **args = malloc(sizeof(char *) * TOKENS_SIZE);
 
 	if (args == NULL)
 		return (NULL);
+
+	for (i = 0; i < token_size; i++)
+		args[i] = NULL;
+
 	p = strtok(cmd_line, DELIMITER);
 
 	while (p != NULL)
