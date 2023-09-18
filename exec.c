@@ -74,29 +74,32 @@ char **build_args(char *cmd_line)
 void exec_cmd(char **args, char **argv)
 {
 	struct stat st;
-	int status;
+	int status, builtin_status;
 	pid_t cpid;
 
 	if (!args[0])
 		return;
-	get_built_in(args);
-	if (stat(args[0], &st) == -1)
-		perror(argv[0]); /* display shell name with error */
-	else
+	builtin_status = get_built_in(args);
+	if (builtin_status == 0)
 	{
-		cpid = fork();
-		if (cpid == -1)
-			perror(args[0]);
-		if (cpid == 0)
-		{
-			if (execve(args[0], args, environ) == -1)
-				perror(args[0]);
-		}
+		if (stat(args[0], &st) == -1)
+			perror(argv[0]); /* display shell name with error */
 		else
 		{
-			do {
-				waitpid(cpid, &status, WUNTRACED);
-			} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+			cpid = fork();
+			if (cpid == -1)
+				perror(args[0]);
+			if (cpid == 0)
+			{
+				if (execve(args[0], args, environ) == -1)
+					perror(args[0]);
+			}
+			else
+			{
+				do {
+					waitpid(cpid, &status, WUNTRACED);
+				} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+			}
 		}
 	}
 }
