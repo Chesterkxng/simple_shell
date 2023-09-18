@@ -24,7 +24,7 @@ extern char **environ;
 typedef struct built_in_func
 {
 	char *keyword;
-	void (*f)(char **args);
+	int (*f)(char **args);
 } builtin_func;
 
 /*********** string.c *************/
@@ -32,6 +32,7 @@ typedef struct built_in_func
 int _strlen(char *s);
 void prompt(void);
 int _strcmp(char *s1, char *s2);
+int _putchar(char c);
 
 /************ memory.c ****************/
 
@@ -50,8 +51,9 @@ void exec_cmd(char **args, char **argv);
 
 /*********** built_in.c **************/
 
-void get_built_in(char **args);
-void exit_built_in(char **args);
+int get_built_in(char **args);
+int exit_built_in(char **args);
+int print_env(char **args);
 
 /*********** free.c *****************/
 
