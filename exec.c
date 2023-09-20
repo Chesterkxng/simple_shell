@@ -12,7 +12,7 @@ char *get_input_line(void)
 	if (getline(&line, &bufsize, stdin) == -1)
 	{
 		free(line);
-		exit(EXIT_FAILURE);
+		exit(0);
 	}
 	return (line);
 }
