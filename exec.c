@@ -99,6 +99,7 @@ void exec_cmd(char **args, char **argv)
 				do {
 					waitpid(cpid, &status, WUNTRACED);
 				} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+				return (0);
 			}
 		}
 	}
