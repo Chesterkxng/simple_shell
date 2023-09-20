@@ -7,6 +7,7 @@
 int get_built_in(char **args)
 {
 	builtin_func fspec[] = {
+		{"exit", exit_built_in},
 		{"env", print_env},
 		{NULL, NULL}
 	};
