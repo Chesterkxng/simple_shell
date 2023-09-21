@@ -29,9 +29,17 @@ int get_built_in(char **args, char *cmd_line)
  */
 int exit_built_in(char **args, char *cmd_line)
 {
-	int exit_status = 0;
+	char *error = "too many arguments\n";
+	int exit_status;
 
-	if (args[1] != NULL)
+	if (args[1] == NULL)
+		exit_status = 0;
+	else if (args[2] != NULL)
+	{
+		write(1, error, _strlen(error));
+		exit_status = 1;
+	}
+	else
 		exit_status = _atoi(args[1]);
 	free(cmd_line);
 	free(args);
