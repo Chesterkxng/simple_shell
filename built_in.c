@@ -2,6 +2,7 @@
 /**
  * get_built_in - a function that get the right built_in to execute
  * @args: array of arguments
+ * @cmd_line: command_line
  * Return: int
  */
 int get_built_in(char **args, char *cmd_line)
@@ -23,6 +24,7 @@ int get_built_in(char **args, char *cmd_line)
 /**
  * exit_built_in - a function that exit the shell on "exit" call
  * @args: array of args
+ * @cmd_line: command_line
  * Return: int exit_status
  */
 int exit_built_in(char **args, char *cmd_line)
@@ -33,11 +35,12 @@ int exit_built_in(char **args, char *cmd_line)
 		exit_status = _atoi(args[1]);
 	free(cmd_line);
 	free(args);
-        exit(exit_status);
+	exit(exit_status);
 }
 /**
  * print_env - a function that print all the environment variable
  * @args : unused args
+ * @cmd_line: command line
  * Return: number of characters printed
  */
 int print_env(char **args, char *cmd_line)

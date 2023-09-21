@@ -69,6 +69,7 @@ char **build_args(char *cmd_line)
  * exec_cmd - a function that execute a simple command
  * @args : command arguments
  * @argv: list of shell arguments
+ * @cmd_line: command line
  * Return: status
  */
 void exec_cmd(char **args, char **argv, char *cmd_line)
