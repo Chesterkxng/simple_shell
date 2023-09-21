@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stddef.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -24,7 +25,7 @@ extern char **environ;
 typedef struct built_in_func
 {
 	char *keyword;
-	int (*f)(char **args);
+	int (*f)(char **args, char *cmd_line);
 } builtin_func;
 
 /*********** string.c *************/
@@ -47,13 +48,13 @@ int _atoi(char *s);
 char *get_input_line(void);
 void insertArgument(char **dest, char *arg);
 char **build_args(char *cmd_line);
-void exec_cmd(char **args, char **argv);
+void exec_cmd(char **args, char **argv, char *cmd_line);
 
 /*********** built_in.c **************/
 
-int get_built_in(char **args);
-int exit_built_in(char **args);
-int print_env(char **args);
+int get_built_in(char **args, char *cmd_line);
+int exit_built_in(char **args, char *cmd_line);
+int print_env(char **args, char *cmd_line);
 
 /*********** free.c *****************/
 
