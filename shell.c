@@ -19,7 +19,7 @@ int main(int argc, char **argv)
 
 		line = get_input_line();
 		args = build_args(line);
-		exec_cmd(args, argv);
+		exec_cmd(args, argv, line);
 		free(line);
 		free(args);
 
