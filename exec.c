@@ -71,7 +71,7 @@ char **build_args(char *cmd_line)
  * @argv: list of shell arguments
  * Return: status
  */
-void exec_cmd(char **args, char **argv)
+void exec_cmd(char **args, char **argv, char *cmd_line)
 {
 	struct stat st;
 	int status, builtin_status;
@@ -79,7 +79,7 @@ void exec_cmd(char **args, char **argv)
 
 	if (!args[0])
 		return;
-	builtin_status = get_built_in(args);
+	builtin_status = get_built_in(args, cmd_line);
 	if (builtin_status == 0)
 	{
 		if (stat(args[0], &st) == -1)
