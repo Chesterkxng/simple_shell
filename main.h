@@ -34,6 +34,7 @@ int _strlen(char *s);
 void prompt(void);
 int _strcmp(char *s1, char *s2);
 int _putchar(char c);
+char *_strcpy(char *dest, char *src);
 
 /************ memory.c ****************/
 
@@ -55,6 +56,12 @@ void exec_cmd(char **args, char **argv, char *cmd_line);
 int get_built_in(char **args, char *cmd_line);
 int exit_built_in(char **args, char *cmd_line);
 int print_env(char **args, char *cmd_line);
+
+/*********** path.c ******************/
+char *_strstr(char *haystack, char *needle);
+char *_strdup(char *str);
+char *_getenv(char *keyword);
+char *search_in_path(char *cmd);
 
 /*********** free.c *****************/
 

@@ -74,16 +74,18 @@ char **build_args(char *cmd_line)
  */
 void exec_cmd(char **args, char **argv, char *cmd_line)
 {
-	struct stat st;
-	int status, builtin_status;
+	int rvalue, status, builtin_status;
 	pid_t cpid;
+	char *cmd_path = NULL;
 
 	if (!args[0])
 		return;
 	builtin_status = get_built_in(args, cmd_line);
 	if (builtin_status == 0)
 	{
-		if (stat(args[0], &st) == -1)
+		cmd_path = search_in_path(args[0]);
+
+		if (!cmd_path)
 			perror(argv[0]); /* display shell name with error */
 		else
 		{
@@ -92,7 +94,12 @@ void exec_cmd(char **args, char **argv, char *cmd_line)
 				perror(args[0]);
 			if (cpid == 0)
 			{
-				if (execve(args[0], args, environ) == -1)
+				if (*cmd_path == '.')
+					rvalue = execve(args[0], args, environ);
+				else
+					rvalue = execve(cmd_path, args,
+							environ);
+				if (rvalue == -1)
 					perror(args[0]);
 			}
 			else
