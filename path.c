@@ -120,7 +120,7 @@ char *search_in_path(char *cmd)
 	char *value, *path, cmd_fullpath[4096];
 
 	if (stat(cmd, &st) == 0)
-		return (".");
+		return (_strdup("."));
 
 	if (_getenv("PATH"))
 		value = _strdup(_getenv("PATH"));
