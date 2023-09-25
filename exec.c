@@ -107,6 +107,7 @@ void exec_cmd(char **args, char **argv, char *cmd_line)
 				do {
 					waitpid(cpid, &status, WUNTRACED);
 				} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+				free(cmd_path);
 			}
 		}
 	}
