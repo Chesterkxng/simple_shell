@@ -90,7 +90,7 @@ char *_getenv(char *keyword)
 	{
 		value = _strstr(environ[i], keyword);
 
-		if (value && *(value + lkey) == '=')
+		if (value && *environ[i] == *keyword)
 		{
 			value = value + lkey + 1;
 			break;
@@ -136,7 +136,7 @@ char *search_in_path(char *cmd)
 
 		if (stat(cmd_fullpath, &st) == 0)
 		{
-			path = cmd_fullpath;
+			path = _strdup(cmd_fullpath);
 			break;
 		}
 
