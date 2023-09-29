@@ -63,6 +63,11 @@ char *_strdup(char *str);
 char *_getenv(char *keyword);
 char *search_in_path(char *cmd);
 
+/*********** utilities.c **************/
+char *_strcat(char *dest, char *src);
+char *itoa(unsigned int, char *buffer);
+int startwith(char *str, char *substr);
+
 /*********** free.c *****************/
 
 void free_args(char **args);
