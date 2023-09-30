@@ -74,6 +74,35 @@ char **build_args(char *cmd_line)
 	}
 	return (args);
 }
+
+/**
+ * print_error - print error when shell cannot be executed
+ *
+ * @shell: first argument of the shell interpreter
+ *
+ * @cmd: command to execute
+ *
+ * @ncmd: number of the command to execute
+ */
+void print_error(char *shell, char *cmd, unsigned int ncmd)
+{
+	char msg[100];
+	char *istr, numstr[15];
+
+	istr = itoa(ncmd, numstr);
+	*istr = '\0';
+
+	_strcpy(msg, shell);
+	_strcat(msg, ": ");
+	_strcat(msg, numstr);
+	_strcat(msg, ": ");
+	_strcat(msg, cmd);
+	_strcat(msg, ": ");
+	_strcat(msg, "not found\n");
+
+	write(2, msg, _strlen(msg));
+}
+
 /**
  * exec_cmd - a function that execute a simple command
  * @args : command arguments
