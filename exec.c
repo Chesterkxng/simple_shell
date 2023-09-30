@@ -84,7 +84,7 @@ char **build_args(char *cmd_line)
  *
  * @ncmd: number of the command to execute
  */
-void print_error(char *shell, char *cmd, unsigned int ncmd)
+int print_error(char *shell, char *cmd, unsigned int ncmd)
 {
 	char msg[100];
 	char *istr, numstr[15];

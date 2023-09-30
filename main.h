@@ -50,7 +50,7 @@ char *get_input_line(int status);
 void insertArgument(char **dest, char *arg);
 char **build_args(char *cmd_line);
 void print_error(char *shell, char *cmd, unsigned int ncmd);
-void exec_cmd(char **args, char **argv, char *cmd_line, unsigned int ncmd);
+int exec_cmd(char **args, char **argv, char *cmd_line, unsigned int ncmd);
 
 /*********** built_in.c **************/
 
