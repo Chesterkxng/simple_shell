@@ -86,11 +86,17 @@ char *_getenv(char *keyword)
 		return (NULL);
 
 	i = 0;
-	while (environ[i])
+	/* skip the test if environ is NULL */
+	while (environ && environ[i] != NULL)
 	{
 		value = _strstr(environ[i], keyword);
-
-		if (value && *environ[i] == *keyword)
+		/*
+		 * ensure PATH is matched at the beginning of the line
+		 * and is not followed by any character other than '='
+		 * like PATH1=value
+		 */
+		if (value && *environ[i] == *keyword &&
+		    *(value + lkey) == '=')
 		{
 			value = value + lkey + 1;
 			break;
@@ -119,11 +125,18 @@ char *search_in_path(char *cmd)
 	struct stat st;
 	char *value, *path, cmd_fullpath[4096];
 
-	if (stat(cmd, &st) == 0)
+	/*
+	 * If the command exits in current path, it should start with "./"
+	 * Otherwise command begins with "../" or "/"
+	 */
+	if (stat(cmd, &st) == 0 &&
+	    (startwith(cmd, "./") || startwith(cmd, "../") || startwith(cmd, "/")))
 		return (_strdup("."));
 
 	if (_getenv("PATH"))
 		value = _strdup(_getenv("PATH"));
+	else
+		return (NULL);
 
 	path = strtok(value, ":");
 
@@ -142,7 +155,9 @@ char *search_in_path(char *cmd)
 
 		path = strtok(NULL, ":");
 	}
+	/* free if a valid path has been found */
+	if (value)
+		free(value);
 
-	free(value);
 	return (path);
 }

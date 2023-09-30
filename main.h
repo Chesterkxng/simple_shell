@@ -46,10 +46,11 @@ int _atoi(char *s);
 
 /*********** exec.c ******************/
 
-char *get_input_line(void);
+char *get_input_line(int status);
 void insertArgument(char **dest, char *arg);
 char **build_args(char *cmd_line);
-void exec_cmd(char **args, char **argv, char *cmd_line);
+void print_error(char *shell, char *cmd, unsigned int ncmd);
+int exec_cmd(char **args, char **argv, char *cmd_line, unsigned int ncmd);
 
 /*********** built_in.c **************/
 
@@ -62,6 +63,11 @@ char *_strstr(char *haystack, char *needle);
 char *_strdup(char *str);
 char *_getenv(char *keyword);
 char *search_in_path(char *cmd);
+
+/*********** utilities.c **************/
+char *_strcat(char *dest, char *src);
+char *itoa(unsigned int, char *buffer);
+int startwith(char *str, char *substr);
 
 /*********** free.c *****************/
 

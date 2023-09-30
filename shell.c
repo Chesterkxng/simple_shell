@@ -10,6 +10,8 @@ int main(int argc, char **argv)
 {
 	char *line;
 	char **args;
+	int status = 0;
+	unsigned int ncmd = 1;
 	(void) argc;
 
 	do {
@@ -17,13 +19,17 @@ int main(int argc, char **argv)
 		if (isatty(0))
 			prompt();
 
-		line = get_input_line();
+		line = get_input_line(status);
 		args = build_args(line);
-		exec_cmd(args, argv, line);
+		status = exec_cmd(args, argv, line, ncmd);
+		ncmd++;
 		free(line);
 		free(args);
 
-	} while (1);
+	} while (status);
 
-	return (0);
+	if (status == 1)
+		return (EXIT_SUCCESS);
+
+	return (status);
 }
