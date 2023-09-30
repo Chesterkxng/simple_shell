@@ -84,7 +84,7 @@ char **build_args(char *cmd_line)
  *
  * @ncmd: number of the command to execute
  */
-int print_error(char *shell, char *cmd, unsigned int ncmd)
+void print_error(char *shell, char *cmd, unsigned int ncmd)
 {
 	char msg[100];
 	char *istr, numstr[15];
@@ -111,7 +111,7 @@ int print_error(char *shell, char *cmd, unsigned int ncmd)
  * @ncmd: number of the command to execute
  * Return: status
  */
-void exec_cmd(char **args, char **argv, char *cmd_line, unsigned int ncmd)
+int exec_cmd(char **args, char **argv, char *cmd_line, unsigned int ncmd)
 {
 	int rvalue, status, builtin_status;
 	pid_t cpid;
