@@ -2,9 +2,11 @@
 /**
  * get_input_line - get user input from stdin
  *
+ * @status: return value of the last command executed
+ *
  * Return: the user input line
  */
-char *get_input_line(void)
+char *get_input_line(int status)
 {
 	char *line = NULL;
 	size_t bufsize = 0;
@@ -12,7 +14,14 @@ char *get_input_line(void)
 	if (getline(&line, &bufsize, stdin) == -1)
 	{
 		free(line);
-		exit(0);
+		/*
+		 * if the last command succeed return 0
+		 * otherwise return 127
+		 */
+		if (status == 1)
+			exit(EXIT_SUCCESS);
+		else
+			exit(status);
 	}
 	return (line);
 }
@@ -70,23 +79,25 @@ char **build_args(char *cmd_line)
  * @args : command arguments
  * @argv: list of shell arguments
  * @cmd_line: command line
+ * @ncmd: number of the command to execute
  * Return: status
  */
-void exec_cmd(char **args, char **argv, char *cmd_line)
+void exec_cmd(char **args, char **argv, char *cmd_line, unsigned int ncmd)
 {
 	int rvalue, status, builtin_status;
 	pid_t cpid;
 	char *cmd_path = NULL;
 
 	if (!args[0])
-		return;
+		return (1);
 	builtin_status = get_built_in(args, cmd_line);
 	if (builtin_status == 0)
 	{
+		/* check if the command exists */
 		cmd_path = search_in_path(args[0]);
-
+		/* if the command doesn't exist */
 		if (!cmd_path)
-			perror(argv[0]); /* display shell name with error */
+			print_error(argv[0], args[0], ncmd);
 		else
 		{
 			cpid = fork();
@@ -107,9 +118,10 @@ void exec_cmd(char **args, char **argv, char *cmd_line)
 				do {
 					waitpid(cpid, &status, WUNTRACED);
 				} while (!WIFEXITED(status) && !WIFSIGNALED(status));
-
 				free(cmd_path);
+				return (1);
 			}
 		}
 	}
+	return (127);
 }
