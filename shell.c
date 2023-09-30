@@ -21,7 +21,7 @@ int main(int argc, char **argv)
 
 		line = get_input_line(status);
 		args = build_args(line);
-		exec_cmd(args, argv, line, ncmd);
+		status = exec_cmd(args, argv, line, ncmd);
 		ncmd++;
 		free(line);
 		free(args);
