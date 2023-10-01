@@ -94,9 +94,7 @@ int exec_cmd(char **args, char **argv, char *cmd_line, unsigned int ncmd)
 	builtin_status = get_built_in(argv, args, cmd_line, ncmd);
 	if (builtin_status == 0)
 	{
-		/* check if the command exists */
 		cmd_path = search_in_path(args[0]);
-		/* if the command doesn't exist */
 		if (!cmd_path)
 			print_error(argv[0], args[0], ncmd);
 		else
@@ -109,8 +107,7 @@ int exec_cmd(char **args, char **argv, char *cmd_line, unsigned int ncmd)
 				if (*cmd_path == '.')
 					rvalue = execve(args[0], args, environ);
 				else
-					rvalue = execve(cmd_path, args,
-							environ);
+					rvalue = execve(cmd_path, args, environ);
 				if (rvalue == -1)
 					perror(args[0]);
 			}
@@ -120,6 +117,8 @@ int exec_cmd(char **args, char **argv, char *cmd_line, unsigned int ncmd)
 					waitpid(cpid, &wstatus, WUNTRACED);
 				} while (!WIFEXITED(wstatus) && !WIFSIGNALED(wstatus));
 				free(cmd_path);
+				if (WEXITSTATUS(wstatus))
+					return (2);
 				return (1);
 			}
 		}
