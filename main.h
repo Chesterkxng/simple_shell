@@ -15,6 +15,7 @@
 #define DELIMITER " \n"
 
 extern char **environ;
+int status;
 
 /*********** structures ***************/
 /**
@@ -25,7 +26,7 @@ extern char **environ;
 typedef struct built_in_func
 {
 	char *keyword;
-	int (*f)(char **args, char *cmd_line);
+	int (*f)(char **argv, char **args, char *cmd_line, unsigned int ncmd);
 } builtin_func;
 
 /*********** string.c *************/
@@ -43,20 +44,20 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 /*********** int.c ********************/
 
 int _atoi(char *s);
+int _isnumber(char *c);
 
 /*********** exec.c ******************/
 
 char *get_input_line(int status);
 void insertArgument(char **dest, char *arg);
 char **build_args(char *cmd_line);
-void print_error(char *shell, char *cmd, unsigned int ncmd);
 int exec_cmd(char **args, char **argv, char *cmd_line, unsigned int ncmd);
 
 /*********** built_in.c **************/
 
-int get_built_in(char **args, char *cmd_line);
-int exit_built_in(char **args, char *cmd_line);
-int print_env(char **args, char *cmd_line);
+int get_built_in(char **argv, char **args, char *cmd_line, unsigned int ncmd);
+int exit_built_in(char **argv, char **args, char *cmd_line, unsigned int ncmd);
+int print_env(char **argv, char **args, char *cmd_line, unsigned int ncmd);
 
 /*********** path.c ******************/
 char *_strstr(char *haystack, char *needle);
@@ -72,5 +73,10 @@ int startwith(char *str, char *substr);
 /*********** free.c *****************/
 
 void free_args(char **args);
+
+
+/*********** error.c ***************/
+void print_error(char *shell, char *cmd, unsigned int ncmd);
+void exit_error(char **argv, char **args, unsigned int ncmd);
 
 #endif /*MAIN_H*/

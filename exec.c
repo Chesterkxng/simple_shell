@@ -76,34 +76,6 @@ char **build_args(char *cmd_line)
 }
 
 /**
- * print_error - print error when shell cannot be executed
- *
- * @shell: first argument of the shell interpreter
- *
- * @cmd: command to execute
- *
- * @ncmd: number of the command to execute
- */
-void print_error(char *shell, char *cmd, unsigned int ncmd)
-{
-	char msg[100];
-	char *istr, numstr[15];
-
-	istr = itoa(ncmd, numstr);
-	*istr = '\0';
-
-	_strcpy(msg, shell);
-	_strcat(msg, ": ");
-	_strcat(msg, numstr);
-	_strcat(msg, ": ");
-	_strcat(msg, cmd);
-	_strcat(msg, ": ");
-	_strcat(msg, "not found\n");
-
-	write(2, msg, _strlen(msg));
-}
-
-/**
  * exec_cmd - a function that execute a simple command
  * @args : command arguments
  * @argv: list of shell arguments
@@ -113,13 +85,13 @@ void print_error(char *shell, char *cmd, unsigned int ncmd)
  */
 int exec_cmd(char **args, char **argv, char *cmd_line, unsigned int ncmd)
 {
-	int rvalue, status, builtin_status;
+	int rvalue, wstatus, builtin_status;
 	pid_t cpid;
 	char *cmd_path = NULL;
 
 	if (!args[0])
 		return (1);
-	builtin_status = get_built_in(args, cmd_line);
+	builtin_status = get_built_in(argv, args, cmd_line, ncmd);
 	if (builtin_status == 0)
 	{
 		/* check if the command exists */
@@ -145,8 +117,8 @@ int exec_cmd(char **args, char **argv, char *cmd_line, unsigned int ncmd)
 			else
 			{
 				do {
-					waitpid(cpid, &status, WUNTRACED);
-				} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+					waitpid(cpid, &wstatus, WUNTRACED);
+				} while (!WIFEXITED(wstatus) && !WIFSIGNALED(wstatus));
 				free(cmd_path);
 				return (1);
 			}
