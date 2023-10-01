@@ -10,7 +10,6 @@ int main(int argc, char **argv)
 {
 	char *line;
 	char **args;
-	int status = 0;
 	unsigned int ncmd = 1;
 	(void) argc;
 
