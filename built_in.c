@@ -34,10 +34,10 @@ int exit_built_in(char **argv, char **args, char *cmd_line, unsigned int ncmd)
 {
 	int exit_status, isnumber;
 
-	if (args[1] == NULL && status != 127)
+	if (args[1] == NULL && status == 1)
 		exit_status = 0;
-	if (args[1] == NULL && status == 127)
-		exit_status = 2;
+	if (args[1] == NULL && status != 1)
+		exit_status = status;
 	if (args[1])
 	{
 		isnumber = _isnumber(args[1]);
